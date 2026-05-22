@@ -2,7 +2,7 @@
 
 Ataque::Ataque()
 {
-    danio = 10;
+    danio = 100;
 }
 
 int Ataque::getDanio()
