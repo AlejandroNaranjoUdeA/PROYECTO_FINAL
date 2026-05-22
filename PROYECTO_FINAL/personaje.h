@@ -1,8 +1,18 @@
 #ifndef PERSONAJE_H
 #define PERSONAJE_H
 
-#include <QGraphicsPixmapItem>
 #include <QObject>
+#include <QGraphicsPixmapItem>
+#include <QList>
+#include <QGraphicsItem>
+
+enum Estado
+{
+    IDLE,
+    CAMINANDO,
+    ATACANDO,
+    DANIO
+};
 
 class Personaje : public QObject,
                   public QGraphicsPixmapItem
@@ -15,11 +25,17 @@ protected:
 
     float velocidad;
 
+    bool atacando;
+
+    Estado estado;
+
 public:
 
     Personaje();
 
     virtual void actualizar();
+
+    virtual void atacar();
 
     void moverIzquierda();
 

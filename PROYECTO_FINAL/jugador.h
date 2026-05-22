@@ -5,9 +5,14 @@
 #include "personaje.h"
 
 #include <QKeyEvent>
+#include <QPixmap>
 
 class Jugador : public Personaje
 {
+private:
+
+    QPixmap spriteSheet;
+
 public:
 
     Jugador();
@@ -16,5 +21,4 @@ public:
 
     void actualizar();
 };
-
 #endif // JUGADOR_H
