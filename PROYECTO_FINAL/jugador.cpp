@@ -4,11 +4,25 @@
 
 Jugador::Jugador()
 {
-    setPixmap(QPixmap("sprites/jugador.png"));
+    // CARGAR SPRITE SHEET
+
+    spriteSheet=QPixmap(":/sprites/sprites1.png");
+
+    qDebug() << spriteSheet.width();
+    qDebug() << spriteSheet.height();
 
     // IDLE INICIAL
 
-    setPixmap(spriteSheet.copy(0,0,64,64));
+    /*setPixmap(
+        spriteSheet.copy(
+            0,
+            0,
+            64,
+            64
+            )
+        );*/
+    setPixmap(spriteSheet);
+    setScale(0.2);
 
     setFlag(QGraphicsItem::ItemIsFocusable);
 
@@ -40,33 +54,61 @@ void Jugador::keyPressEvent(QKeyEvent *event)
 }
 
 void Jugador::actualizar()
-{
+{/*
     switch(estado)
     {
     case IDLE:
 
-        setPixmap(spriteSheet.copy(0,0,64,64));
+        setPixmap(
+            spriteSheet.copy(
+                0,
+                0,
+                64,
+                64
+                )
+            );
 
         break;
 
     case CAMINANDO:
 
-        setPixmap(spriteSheet.copy(64,0,64,64));
+        setPixmap(
+            spriteSheet.copy(
+                64,
+                0,
+                64,
+                64
+                )
+            );
 
         break;
 
     case ATACANDO:
 
-        setPixmap(spriteSheet.copy(128,0,64,64));
+        setPixmap(
+            spriteSheet.copy(
+                128,
+                0,
+                64,
+                64
+                )
+            );
 
         break;
 
     case DANIO:
 
-        setPixmap(spriteSheet.copy(192,0,64,64));
+        setPixmap(
+            spriteSheet.copy(
+                192,
+                0,
+                64,
+                64
+                )
+            );
 
         break;
     }
 
-    estado = IDLE;
+    estado = IDLE;*/
 }

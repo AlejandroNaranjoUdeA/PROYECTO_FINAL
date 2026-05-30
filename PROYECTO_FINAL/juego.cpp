@@ -23,11 +23,11 @@ Juego::Juego(QWidget *parent)
 
     // ENEMIGO
 
-    enemigo = new Enemigo();
+    /*enemigo = new Enemigo();
 
     enemigo->setPos(700,400);
 
-    scene->addItem(enemigo);
+    scene->addItem(enemigo);*/
 
     // TIMER
 
@@ -42,5 +42,5 @@ Juego::Juego(QWidget *parent)
 void Juego::actualizarJuego()
 {
     jugador->actualizar();
-    enemigo->actualizar();
+    //enemigo->actualizar();
 }

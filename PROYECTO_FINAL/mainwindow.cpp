@@ -6,6 +6,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    juego = new Juego(this);
+
+    setCentralWidget(juego);
 }
 
 MainWindow::~MainWindow()

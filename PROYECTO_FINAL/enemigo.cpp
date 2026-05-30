@@ -4,7 +4,7 @@
 
 Enemigo::Enemigo()
 {
-    setPixmap(QPixmap(":/sprites/enemigo.png"));
+    setPixmap(QPixmap(":/sprites/sprites1.png"));
 }
 
 void Enemigo::actualizar()
