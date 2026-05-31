@@ -7,6 +7,19 @@ Juego::Juego(QWidget *parent)
 
     scene = new QGraphicsScene();
 
+    QPixmap fondo(":/sprites/fondo1.png");
+
+    scene->setBackgroundBrush(
+        QBrush(
+            fondo.scaled(
+                1000,
+                600,
+                Qt::IgnoreAspectRatio,
+                Qt::SmoothTransformation
+                )
+            )
+        );
+
     scene->setSceneRect(0,0,1000,600);
 
     setScene(scene);
@@ -17,17 +30,32 @@ Juego::Juego(QWidget *parent)
 
     jugador = new Jugador();
 
-    jugador->setPos(200,400);
+    jugador->setPos(250,350);
 
     scene->addItem(jugador);
 
-    // ENEMIGO
+    //ENEMIGO
 
-    /*enemigo = new Enemigo();
+    enemigo = new Enemigo(jugador);
 
-    enemigo->setPos(700,400);
+    enemigo->setPos(700,295);
 
-    scene->addItem(enemigo);*/
+    scene->addItem(enemigo);
+
+    // BARRA DE VIDA:
+
+    barraVida = new QGraphicsRectItem();
+
+    barraVida->setRect(
+        20,   // x
+        20,   // y
+        250,  // ancho
+        15    // alto
+        );
+
+    barraVida->setBrush(Qt::white);
+
+    scene->addItem(barraVida);
 
     // TIMER
 
@@ -42,5 +70,13 @@ Juego::Juego(QWidget *parent)
 void Juego::actualizarJuego()
 {
     jugador->actualizar();
-    //enemigo->actualizar();
+    enemigo->actualizar();
+    int vida = jugador->getVida();
+
+    barraVida->setRect(
+        20,
+        20,
+        vida * 3,
+        20
+        );
 }

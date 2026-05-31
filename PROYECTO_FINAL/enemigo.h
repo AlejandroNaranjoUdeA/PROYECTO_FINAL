@@ -2,15 +2,23 @@
 #define ENEMIGO_H
 
 #include "personaje.h"
+#include "jugador.h"
+
+#include <QPixmap>
 
 class Enemigo : public Personaje
 {
+private:
+
+    QPixmap spriteSheet;
+
+    Jugador* objetivo;
+
 public:
 
-    Enemigo();
+    Enemigo(Jugador* jugador);
 
-    void actualizar();
+    void actualizar() override;
 };
-
 
 #endif // ENEMIGO_H

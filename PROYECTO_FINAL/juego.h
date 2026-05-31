@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsRectItem>
 #include <QTimer>
 
 #include "jugador.h"
@@ -18,7 +19,7 @@ private:
 
     Jugador *jugador;
     Enemigo *enemigo;
-
+    QGraphicsRectItem *barraVida;
     QTimer *timer;
 
 public:

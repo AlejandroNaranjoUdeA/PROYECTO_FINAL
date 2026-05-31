@@ -1,7 +1,6 @@
 #ifndef JUGADOR_H
 #define JUGADOR_H
 
-
 #include "personaje.h"
 
 #include <QKeyEvent>
@@ -13,6 +12,10 @@ private:
 
     QPixmap spriteSheet;
 
+    int personajeActual;
+
+    int tiempoAtaque;
+
 public:
 
     Jugador();
@@ -21,4 +24,5 @@ public:
 
     void actualizar();
 };
+
 #endif // JUGADOR_H

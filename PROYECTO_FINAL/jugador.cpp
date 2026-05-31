@@ -1,32 +1,40 @@
 #include "jugador.h"
 
 #include <QPixmap>
+#include <QDebug>
 
 Jugador::Jugador()
 {
     // CARGAR SPRITE SHEET
 
-    spriteSheet=QPixmap(":/sprites/sprites1.png");
+    spriteSheet = QPixmap(":/sprites/sprites1.png");
 
     qDebug() << spriteSheet.width();
     qDebug() << spriteSheet.height();
 
-    // IDLE INICIAL
+    // 0 = Fuego
+    // 1 = Agua
 
-    /*setPixmap(
+    personajeActual = 0;
+
+    // SPRITE INICIAL
+
+    setPixmap(
         spriteSheet.copy(
             0,
             0,
-            64,
-            64
+            384,
+            512
             )
-        );*/
-    setPixmap(spriteSheet);
+        );
+
     setScale(0.2);
 
     setFlag(QGraphicsItem::ItemIsFocusable);
 
     setFocus();
+
+    tiempoAtaque = 0;
 }
 
 void Jugador::keyPressEvent(QKeyEvent *event)
@@ -50,11 +58,48 @@ void Jugador::keyPressEvent(QKeyEvent *event)
         atacar();
 
         estado = ATACANDO;
+
+        tiempoAtaque = 25;
+    }
+
+    if(event->key() == Qt::Key_X)
+    {
+        personajeActual = 1 - personajeActual;
+
+        if(personajeActual == 0)
+        {
+            setScale(0.20); // Fuego
+            setY(350);
+        }
+        else
+        {
+            setScale(0.23); // Agua
+            setY(357);
+        }
+
+        qDebug() << "Personaje:" << personajeActual;
+    }
+    if(event->key() == Qt::Key_P)
+    {
+        recibirDanio(10);
     }
 }
 
 void Jugador::actualizar()
-{/*
+{
+    int fila = personajeActual * 512;
+
+    if(tiempoAtaque > 0)
+    {
+        tiempoAtaque--;
+
+        estado = ATACANDO;
+    }
+    else
+    {
+        estado = IDLE;
+    }
+
     switch(estado)
     {
     case IDLE:
@@ -62,9 +107,9 @@ void Jugador::actualizar()
         setPixmap(
             spriteSheet.copy(
                 0,
-                0,
-                64,
-                64
+                fila,
+                384,
+                512
                 )
             );
 
@@ -74,10 +119,10 @@ void Jugador::actualizar()
 
         setPixmap(
             spriteSheet.copy(
-                64,
-                0,
-                64,
-                64
+                384,
+                fila,
+                384,
+                512
                 )
             );
 
@@ -87,10 +132,10 @@ void Jugador::actualizar()
 
         setPixmap(
             spriteSheet.copy(
-                128,
-                0,
-                64,
-                64
+                768,
+                fila,
+                384,
+                512
                 )
             );
 
@@ -100,15 +145,13 @@ void Jugador::actualizar()
 
         setPixmap(
             spriteSheet.copy(
-                192,
-                0,
-                64,
-                64
+                1152,
+                fila,
+                384,
+                512
                 )
             );
 
         break;
     }
-
-    estado = IDLE;*/
 }

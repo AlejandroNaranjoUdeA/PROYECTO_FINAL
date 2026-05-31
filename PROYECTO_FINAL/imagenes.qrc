@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>sprites/sprites1.png</file>
         <file>sprites/sprite2.png</file>
+        <file>sprites/fondo1.png</file>
+        <file>sprites/enemigo.png</file>
     </qresource>
 </RCC>
