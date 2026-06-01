@@ -4,5 +4,6 @@
         <file>sprites/sprite2.png</file>
         <file>sprites/fondo1.png</file>
         <file>sprites/enemigo.png</file>
+        <file>sprites/bolas de fuego.png</file>
     </qresource>
 </RCC>
