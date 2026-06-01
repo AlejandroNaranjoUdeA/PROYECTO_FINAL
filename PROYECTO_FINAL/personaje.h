@@ -41,6 +41,8 @@ public:
 
     void moverDerecha();
 
+    void moverArriba();
+
     void recibirDanio(int danio);
 
     int getVida();

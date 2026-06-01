@@ -62,6 +62,13 @@ void Jugador::keyPressEvent(QKeyEvent *event)
         tiempoAtaque = 25;
     }
 
+    if(event->key() == Qt::Key_W)
+    {
+        moverArriba();
+
+        estado= CAMINANDO;
+    }
+
     if(event->key() == Qt::Key_X)
     {
         personajeActual = 1 - personajeActual;

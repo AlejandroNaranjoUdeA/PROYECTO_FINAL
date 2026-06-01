@@ -2,7 +2,7 @@
 #define JUGADOR_H
 
 #include "personaje.h"
-
+#include "ataque.h"
 #include <QKeyEvent>
 #include <QPixmap>
 

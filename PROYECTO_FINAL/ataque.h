@@ -1,15 +1,24 @@
 #ifndef ATAQUE_H
 #define ATAQUE_H
 
-class Ataque
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
+
+class Ataque : public QGraphicsPixmapItem
 {
-protected:
+private:
+
+    QPixmap spriteSheet;
 
     int danio;
+
+    unsigned int frameActual;
 
 public:
 
     Ataque();
+
+    void actualizar();
 
     int getDanio();
 };

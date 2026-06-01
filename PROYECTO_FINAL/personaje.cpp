@@ -50,6 +50,11 @@ void Personaje::moverDerecha()
     setX(x() + velocidad);
 }
 
+void Personaje::moverArriba()
+{
+    setY(y() + velocidad);
+}
+
 void Personaje::recibirDanio(int danio)
 {
     vida -= danio;
