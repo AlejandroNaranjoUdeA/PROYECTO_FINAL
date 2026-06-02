@@ -14,6 +14,8 @@ private:
 
     Jugador* objetivo;
 
+    unsigned int contadorAtaque;
+
 public:
 
     Enemigo(Jugador* jugador);

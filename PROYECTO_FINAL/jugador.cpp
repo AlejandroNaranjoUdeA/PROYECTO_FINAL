@@ -30,11 +30,17 @@ Jugador::Jugador()
 
     setScale(0.2);
 
+    setTransformOriginPoint(
+        boundingRect().center()
+        );
+
     setFlag(QGraphicsItem::ItemIsFocusable);
 
     setFocus();
 
     tiempoAtaque = 0;
+
+    mirandoDerecha = true;
 }
 
 void Jugador::keyPressEvent(QKeyEvent *event)
@@ -44,6 +50,8 @@ void Jugador::keyPressEvent(QKeyEvent *event)
         moverIzquierda();
 
         estado = CAMINANDO;
+
+        mirandoDerecha = false;
     }
 
     if(event->key() == Qt::Key_D)
@@ -51,6 +59,8 @@ void Jugador::keyPressEvent(QKeyEvent *event)
         moverDerecha();
 
         estado = CAMINANDO;
+
+        mirandoDerecha = true;
     }
 
     if(event->key() == Qt::Key_J)
@@ -106,6 +116,30 @@ void Jugador::actualizar()
     {
         estado = IDLE;
     }
+
+
+
+    float escala;
+
+    if(personajeActual == 0)
+    {
+        escala = 0.20;
+    }
+    else
+    {
+        escala = 0.23;
+    }
+
+    if(mirandoDerecha)
+    {
+        setScale(escala);
+    }
+    else
+    {
+        setScale(-escala);
+    }
+
+
 
     switch(estado)
     {

@@ -6,6 +6,7 @@
 #include <QGraphicsRectItem>
 #include <QTimer>
 
+#include "ataque.h"
 #include "jugador.h"
 #include "enemigo.h"
 
@@ -19,6 +20,7 @@ private:
 
     Jugador *jugador;
     Enemigo *enemigo;
+    Ataque *bola;
     QGraphicsRectItem *barraVida;
     QTimer *timer;
 

@@ -16,6 +16,8 @@ private:
 
     int tiempoAtaque;
 
+    bool mirandoDerecha;
+
 public:
 
     Jugador();

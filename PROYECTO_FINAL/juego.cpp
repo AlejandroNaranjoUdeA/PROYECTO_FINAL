@@ -57,6 +57,14 @@ Juego::Juego(QWidget *parent)
 
     scene->addItem(barraVida);
 
+    //BOLA DE FUEGO:
+
+    bola= new Ataque();
+
+    bola->setPos(260, 355);
+
+    scene->addItem(bola);
+
     // TIMER
 
     timer = new QTimer();
@@ -71,6 +79,7 @@ void Juego::actualizarJuego()
 {
     jugador->actualizar();
     enemigo->actualizar();
+    bola->actualizar();
     int vida = jugador->getVida();
 
     barraVida->setRect(

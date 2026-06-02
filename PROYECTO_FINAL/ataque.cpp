@@ -12,7 +12,7 @@ Ataque::Ataque()
         spriteSheet.copy(
             0,
             0,
-            172,
+            175,
             181
             )
         );
@@ -30,20 +30,20 @@ void Ataque::actualizar()
 {
     frameActual++;
 
-    if(frameActual >= 8)
+    if(frameActual >= 6)
     {
         frameActual = 0;
     }
 
     setPixmap(
         spriteSheet.copy(
-            frameActual * 172,
+            frameActual * 175,
             0,
-            172,
+            175,
             181
             )
         );
 
-    setX(x() + 15);
+    setX(x() + 1);
 }
 

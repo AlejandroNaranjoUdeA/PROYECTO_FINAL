@@ -25,12 +25,21 @@ Enemigo::Enemigo(Jugador *jugador)
 void Enemigo::actualizar()
 {
     if(!objetivo)
-        return;
-
-    float distancia = abs(objetivo->x() - x());
-
-    if(distancia > 150)
     {
+        return;
+    }
+
+    contadorAtaque++;
+
+    float distancia =
+        abs(objetivo->x() - x());
+
+    // SEGUIR AL JUGADOR
+
+    if(distancia > 40)
+    {
+        estado = CAMINANDO;
+
         if(objetivo->x() < x())
         {
             moverIzquierda();
@@ -39,12 +48,20 @@ void Enemigo::actualizar()
         {
             moverDerecha();
         }
-
-        estado = CAMINANDO;
     }
+
+    // ATACAR
+
     else
     {
-        estado = IDLE;
+        estado = ATACANDO;
+
+        if(contadorAtaque >= 60)
+        {
+            objetivo->recibirDanio(10);
+
+            contadorAtaque = 0;
+        }
     }
 
     // CAMBIO DE SPRITES
