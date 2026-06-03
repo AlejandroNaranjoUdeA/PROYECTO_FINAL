@@ -6,6 +6,8 @@ Enemigo::Enemigo(Jugador *jugador)
 
     velocidad= 2;
 
+    mirandoDerecha = true;
+
     spriteSheet = QPixmap(":/sprites/enemigo.png");
 
     // IDLE
@@ -42,10 +44,14 @@ void Enemigo::actualizar()
 
         if(objetivo->x() < x())
         {
+            mirandoDerecha = true;
+
             moverIzquierda();
         }
         else
         {
+            mirandoDerecha = false;
+
             moverDerecha();
         }
     }
@@ -64,61 +70,74 @@ void Enemigo::actualizar()
         }
     }
 
+
     // CAMBIO DE SPRITES
+
+    QPixmap frame;
 
     switch(estado)
     {
     case IDLE:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 1152,
                 0,
                 384,
                 1024
                 )
-            );
+            ;
 
         break;
 
     case CAMINANDO:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 384,
                 0,
                 384,
                 1024
                 )
-            );
+            ;
 
         break;
 
     case ATACANDO:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 768,
                 0,
                 384,
                 1024
                 )
-            );
+            ;
 
         break;
 
 
     case DANIO:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 0,
                 0,
                 384,
                 1024
                 )
-            );
+            ;
 
         break;
     }
+
+    if(!mirandoDerecha)
+    {
+        frame =
+            frame.transformed(
+                QTransform().scale(-1,1)
+                );
+    }
+
+    setPixmap(frame);
 }

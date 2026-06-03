@@ -30,9 +30,9 @@ Jugador::Jugador()
 
     setScale(0.2);
 
-    setTransformOriginPoint(
+    /*setTransformOriginPoint(
         boundingRect().center()
-        );
+        );*/
 
     setFlag(QGraphicsItem::ItemIsFocusable);
 
@@ -117,82 +117,72 @@ void Jugador::actualizar()
         estado = IDLE;
     }
 
-
-
-    float escala;
-
-    if(personajeActual == 0)
-    {
-        escala = 0.20;
-    }
-    else
-    {
-        escala = 0.23;
-    }
-
-    if(mirandoDerecha)
-    {
-        setScale(escala);
-    }
-    else
-    {
-        setScale(-escala);
-    }
-
-
+    QPixmap frame;
 
     switch(estado)
     {
     case IDLE:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 0,
                 fila,
                 384,
                 512
                 )
-            );
+            ;
 
         break;
 
     case CAMINANDO:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 384,
                 fila,
                 384,
                 512
                 )
-            );
+            ;
 
         break;
 
     case ATACANDO:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 768,
                 fila,
                 384,
                 512
                 )
-            );
+            ;
 
         break;
 
     case DANIO:
 
-        setPixmap(
+        frame=
             spriteSheet.copy(
                 1152,
                 fila,
                 384,
                 512
                 )
-            );
+            ;
 
         break;
     }
+
+    if(!mirandoDerecha)
+    {
+        frame =
+            frame.transformed(
+                QTransform().scale(-1,1)
+                );
+    }
+
+    setPixmap(frame);
+
+    estado = IDLE;
 }

@@ -16,6 +16,8 @@ private:
 
     unsigned int contadorAtaque;
 
+    bool mirandoDerecha;
+
 public:
 
     Enemigo(Jugador* jugador);
