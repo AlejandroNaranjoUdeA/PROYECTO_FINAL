@@ -15,7 +15,6 @@ SOURCES += \
     jugador.cpp \
     main.cpp \
     mainwindow.cpp \
-    motorfisico.cpp \
     personaje.cpp
 
 HEADERS += \
@@ -24,7 +23,6 @@ HEADERS += \
     juego.h \
     jugador.h \
     mainwindow.h \
-    motorfisico.h \
     personaje.h
 
 FORMS += \

@@ -18,6 +18,8 @@ private:
 
     bool mirandoDerecha;
 
+    bool lanzarBola;
+
 public:
 
     Jugador();
@@ -25,6 +27,12 @@ public:
     void keyPressEvent(QKeyEvent *event);
 
     void actualizar();
+
+    bool quiereDisparar();
+
+    bool miraDerecha();
+
+    int getPersonajeActual();
 };
 
 #endif // JUGADOR_H

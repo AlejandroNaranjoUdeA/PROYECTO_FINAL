@@ -9,6 +9,7 @@
 #include "ataque.h"
 #include "jugador.h"
 #include "enemigo.h"
+#include <QList>
 
 class Juego : public QGraphicsView
 {
@@ -20,7 +21,7 @@ private:
 
     Jugador *jugador;
     Enemigo *enemigo;
-    Ataque *bola;
+    QList<Ataque*> ataques;
     QGraphicsRectItem *barraVida;
     QTimer *timer;
 

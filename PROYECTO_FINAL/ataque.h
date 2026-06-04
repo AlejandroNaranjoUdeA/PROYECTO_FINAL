@@ -3,6 +3,7 @@
 
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <cmath>
 
 class Ataque : public QGraphicsPixmapItem
 {
@@ -14,13 +15,27 @@ private:
 
     unsigned int frameActual;
 
+    int velocidadX;
+
+    bool ataqueAgua;
+
+    //fisica:
+
+    double tiempo;
+    double amplitud;
+    double frecuencia;
+
+    double yInicial;
+
 public:
 
-    Ataque();
+    Ataque(bool derecha, bool esAgua);
 
     void actualizar();
 
     int getDanio();
+
+    void setYInicial(double y);
 };
 
 #endif // ATAQUE_H

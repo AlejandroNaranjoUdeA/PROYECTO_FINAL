@@ -57,13 +57,6 @@ Juego::Juego(QWidget *parent)
 
     scene->addItem(barraVida);
 
-    //BOLA DE FUEGO:
-
-    bola= new Ataque();
-
-    bola->setPos(260, 355);
-
-    scene->addItem(bola);
 
     // TIMER
 
@@ -78,8 +71,55 @@ Juego::Juego(QWidget *parent)
 void Juego::actualizarJuego()
 {
     jugador->actualizar();
+
     enemigo->actualizar();
-    bola->actualizar();
+
+    if(jugador->quiereDisparar())
+    {
+        bool esAgua =
+            (jugador->getPersonajeActual() == 1);
+
+        Ataque *bola =
+            new Ataque(
+                jugador->miraDerecha(),
+                esAgua
+                );
+
+        if(jugador->miraDerecha())
+        {
+            bola->setPos(
+                jugador->x() + 60,
+                jugador->y() + 40
+                );
+        }
+        else
+        {
+            bola->setPos(
+                jugador->x() - 30,
+                jugador->y() + 40
+                );
+        }
+
+        double xSpawn = jugador->x() + 60;
+        double ySpawn = jugador->y() + 40;
+
+        bola->setPos(
+            xSpawn,
+            ySpawn
+            );
+
+        bola->setYInicial(ySpawn);
+
+        scene->addItem(bola);
+
+        ataques.append(bola);
+    }
+
+    for(int i = 0; i < ataques.size(); i++)
+    {
+        ataques[i]->actualizar();
+    }
+
     int vida = jugador->getVida();
 
     barraVida->setRect(

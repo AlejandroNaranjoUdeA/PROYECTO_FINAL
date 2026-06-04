@@ -41,6 +41,8 @@ Jugador::Jugador()
     tiempoAtaque = 0;
 
     mirandoDerecha = true;
+
+    lanzarBola = false;
 }
 
 void Jugador::keyPressEvent(QKeyEvent *event)
@@ -70,6 +72,8 @@ void Jugador::keyPressEvent(QKeyEvent *event)
         estado = ATACANDO;
 
         tiempoAtaque = 25;
+
+        lanzarBola = true;
     }
 
     if(event->key() == Qt::Key_W)
@@ -185,4 +189,26 @@ void Jugador::actualizar()
     setPixmap(frame);
 
     estado = IDLE;
+}
+
+
+bool Jugador::quiereDisparar()
+{
+    if(lanzarBola)
+    {
+        lanzarBola = false;
+        return true;
+    }
+
+    return false;
+}
+
+bool Jugador::miraDerecha()
+{
+    return mirandoDerecha;
+}
+
+int Jugador::getPersonajeActual()
+{
+    return personajeActual;
 }
