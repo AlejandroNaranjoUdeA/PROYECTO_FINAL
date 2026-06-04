@@ -47,6 +47,8 @@ Jugador::Jugador()
 
 void Jugador::keyPressEvent(QKeyEvent *event)
 {
+    qDebug() << "TECLA";
+
     if(event->key() == Qt::Key_A)
     {
         moverIzquierda();

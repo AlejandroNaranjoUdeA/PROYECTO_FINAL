@@ -25,9 +25,12 @@ private:
     QGraphicsRectItem *barraVida;
     QTimer *timer;
 
+    unsigned int nivelActual;
+
 public:
 
-    Juego(QWidget *parent = nullptr);
+    Juego(unsigned int nivel,QWidget *parent = nullptr);
+
 
 public slots:
 

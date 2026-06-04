@@ -1,8 +1,10 @@
 #include "juego.h"
 
-Juego::Juego(QWidget *parent)
+Juego::Juego(unsigned int nivel,QWidget *parent)
     : QGraphicsView(parent)
 {
+    nivelActual = nivel;
+
     // ESCENA
 
     scene = new QGraphicsScene();
@@ -24,6 +26,9 @@ Juego::Juego(QWidget *parent)
 
     setScene(scene);
 
+    setFocusPolicy(Qt::StrongFocus);
+    setFocus();
+
     setFixedSize(1000,600);
 
     // JUGADOR
@@ -34,13 +39,28 @@ Juego::Juego(QWidget *parent)
 
     scene->addItem(jugador);
 
+    jugador->setFocus();
+
     //ENEMIGO
 
-    enemigo = new Enemigo(jugador);
+    if(nivelActual == 1)
+    {
+        enemigo = new Enemigo(jugador);
 
-    enemigo->setPos(700,295);
+        enemigo->setPos(700,295);
 
-    scene->addItem(enemigo);
+        scene->addItem(enemigo);
+    }
+    else
+    {
+        enemigo = new Enemigo(jugador);
+
+        enemigo->setPos(850,295);
+
+        scene->addItem(enemigo);
+
+        enemigo->recibirDanio(-100);
+    }
 
     // BARRA DE VIDA:
 
@@ -56,6 +76,13 @@ Juego::Juego(QWidget *parent)
     barraVida->setBrush(Qt::white);
 
     scene->addItem(barraVida);
+
+
+
+    scene->setFocusItem(jugador);
+
+    jugador->setFocus();
+
 
 
     // TIMER
@@ -129,3 +156,4 @@ void Juego::actualizarJuego()
         20
         );
 }
+
