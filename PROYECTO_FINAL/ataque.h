@@ -18,6 +18,8 @@ private:
     int velocidadX;
 
     bool ataqueAgua;
+    bool ataqueAire;
+    bool ataqueTierra;
 
 
     //fisica:
@@ -29,12 +31,12 @@ private:
 
 
     bool derecha;
-
     bool esDelJugador;
 
 public:
 
-    Ataque(bool derecha, bool esAgua, bool esDelJugador);
+    Ataque(bool derecha, bool esAgua,bool esAire,
+           bool esTierra, bool esDelJugador);
 
     void actualizar();
 

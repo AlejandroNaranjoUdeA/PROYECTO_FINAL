@@ -1,12 +1,14 @@
 #include "ataque.h"
 
-Ataque::Ataque(bool derecha, bool esAgua, bool esDelJugador)
+Ataque::Ataque(bool derecha, bool esAgua, bool esAire, bool esTierra, bool esDelJugador)
 {
     this->derecha = derecha;
 
     this->esDelJugador = esDelJugador;
 
     ataqueAgua = esAgua;
+    ataqueAire = esAire;
+    ataqueTierra = esTierra;
 
     tiempo = 0;
 
@@ -16,13 +18,21 @@ Ataque::Ataque(bool derecha, bool esAgua, bool esDelJugador)
 
     if(esDelJugador)
     {
-        if(esAgua)
+        if(ataqueAgua)
         {
             danio = 3;
         }
+        else if(ataqueAire)
+        {
+            danio = 4;
+        }
+        else if(ataqueTierra)
+        {
+            danio = 6;
+        }
         else
         {
-            danio = 5;
+            danio = 5; // fuego
         }
     }
     else
@@ -34,7 +44,7 @@ Ataque::Ataque(bool derecha, bool esAgua, bool esDelJugador)
 
     if(esDelJugador)
     {
-        if(esAgua)
+        if(ataqueAgua)
         {
             spriteSheet =
                 QPixmap(":/sprites/bolas_agua.png");
@@ -44,6 +54,34 @@ Ataque::Ataque(bool derecha, bool esAgua, bool esDelJugador)
                     0,
                     0,
                     256,
+                    181
+                    )
+                );
+        }
+        else if(ataqueAire)
+        {
+            spriteSheet =
+                QPixmap(":/sprites/bolas_aire.png");
+
+            setPixmap(
+                spriteSheet.copy(
+                    0,
+                    0,
+                    256,
+                    181
+                    )
+                );
+        }
+        else if(ataqueTierra)
+        {
+            spriteSheet =
+                QPixmap(":/sprites/bolas_tierra.png");
+
+            setPixmap(
+                spriteSheet.copy(
+                    0,
+                    0,
+                    175,
                     181
                     )
                 );
@@ -107,14 +145,14 @@ void Ataque::actualizar()
         frameActual = 0;
     }
 
-    if(ataqueAgua)
+    if(ataqueAgua || ataqueAire)
     {
         setPixmap(
             spriteSheet.copy(
                 frameActual * 256,
                 0,
                 256,
-                1024
+                181
                 )
             );
 
@@ -124,7 +162,17 @@ void Ataque::actualizar()
             yInicial +
             amplitud * sin(frecuencia * tiempo)
             );
-
+    }
+    else if(ataqueTierra)
+    {
+        setPixmap(
+            spriteSheet.copy(
+                frameActual * 175,
+                0,
+                175,
+                181
+                )
+            );
     }
     else
     {

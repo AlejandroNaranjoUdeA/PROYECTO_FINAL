@@ -23,9 +23,11 @@ private:
     bool lanzarRoca;
     int tiempoRecarga;
 
+    unsigned int nivelActual;
+
 public:
 
-    Enemigo(Jugador* jugador);
+    Enemigo(Jugador* jugador, unsigned int nivel);
 
     void actualizar() override;
 

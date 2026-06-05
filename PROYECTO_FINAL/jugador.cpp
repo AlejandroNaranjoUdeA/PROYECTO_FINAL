@@ -3,11 +3,22 @@
 #include <QPixmap>
 #include <QDebug>
 
-Jugador::Jugador()
+Jugador::Jugador(unsigned int nivel)
 {
+    nivelActual = nivel;
+
     // CARGAR SPRITE SHEET
 
-    spriteSheet = QPixmap(":/sprites/sprites1.png");
+    if(nivelActual == 1)
+    {
+        spriteSheet =
+            QPixmap(":/sprites/sprites1.png");
+    }
+    else
+    {
+        spriteSheet =
+            QPixmap(":/sprites/sprites2.png");
+    }
 
     qDebug() << spriteSheet.width();
     qDebug() << spriteSheet.height();

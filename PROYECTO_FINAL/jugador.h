@@ -30,9 +30,11 @@ private:
 
     double sueloY;
 
+    unsigned int nivelActual;
+
 public:
 
-    Jugador();
+    Jugador(unsigned int nivel);
 
     void keyPressEvent(QKeyEvent *event);
 

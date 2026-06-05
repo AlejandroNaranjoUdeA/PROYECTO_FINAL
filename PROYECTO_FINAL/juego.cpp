@@ -11,7 +11,16 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
 
     scene = new QGraphicsScene();
 
-    QPixmap fondo(":/sprites/fondo1.png");
+    QPixmap fondo;
+
+    if(nivelActual == 1)
+    {
+        fondo.load(":/sprites/fondo1.png");
+    }
+    else
+    {
+        fondo.load(":/sprites/fondo2.png");
+    }
 
     scene->setBackgroundBrush(
         QBrush(
@@ -35,7 +44,7 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
 
     // JUGADOR
 
-    jugador = new Jugador();
+    jugador = new Jugador(nivelActual);
 
     jugador->setPos(250,350);
 
@@ -47,7 +56,7 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
 
     if(nivelActual == 1)
     {
-        enemigo = new Enemigo(jugador);
+        enemigo = new Enemigo(jugador, nivelActual);
 
         enemigo->setPos(700,295);
 
@@ -55,7 +64,7 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
     }
     else
     {
-        enemigo = new Enemigo(jugador);
+        enemigo = new Enemigo(jugador, nivelActual);
 
         enemigo->setPos(850,295);
 
@@ -120,13 +129,35 @@ void Juego::actualizarJuego()
 
     if(jugador->quiereDisparar())
     {
-        bool esAgua =
-            (jugador->getPersonajeActual() == 1);
+        bool esAgua = false;
+        bool esAire = false;
+        bool esTierra = false;
+
+        if(nivelActual == 1)
+        {
+            if(jugador->getPersonajeActual() == 1)
+            {
+                esAgua = true;
+            }
+        }
+        else
+        {
+            if(jugador->getPersonajeActual() == 0)
+            {
+                esAire = true;
+            }
+            else
+            {
+                esTierra = true;
+            }
+        }
 
         Ataque *bola =
             new Ataque(
                 jugador->miraDerecha(),
                 esAgua,
+                esAire,
+                esTierra,
                 true
                 );
 
@@ -158,8 +189,10 @@ void Juego::actualizarJuego()
                 Ataque *roca =
                     new Ataque(
                         haciaDerecha,
-                        false,
-                        false
+                        false, // agua
+                        false, // aire
+                        false, // tierra
+                        false  // enemigo
                         );
 
                 if(haciaDerecha)
@@ -238,54 +271,28 @@ void Juego::actualizarJuego()
 
                         enemigo = nullptr;
 
-                        if(enemigo->getVida() <= 0)
+                        QMessageBox::StandardButton opcion;
+
+                        if(nivelActual == 1)
                         {
-                            timer->stop();
+                            opcion = QMessageBox::question(
+                                this,
+                                "Victoria",
+                                "¡Ganaste!\n\n¿Ir al nivel 2?",
+                                QMessageBox::Yes | QMessageBox::No
+                                );
 
-                            scene->removeItem(enemigo);
-
-                            delete enemigo;
-
-                            enemigo = nullptr;
-
-                            QMessageBox::StandardButton opcion;
-
-                            if(nivelActual == 1)
+                            if(opcion == QMessageBox::Yes)
                             {
-                                opcion = QMessageBox::question(
-                                    this,
-                                    "Victoria",
-                                    "¡Ganaste!\n\n¿Ir al nivel 2?",
-                                    QMessageBox::Yes | QMessageBox::No
-                                    );
+                                Juego *nivel2 =
+                                    new Juego(2);
 
-                                if(opcion == QMessageBox::Yes)
-                                {
-                                    Juego *nivel2 =
-                                        new Juego(2);
+                                nivel2->show();
 
-                                    nivel2->show();
-
-                                    close();
-                                }
-                                else
-                                {
-                                    MainWindow *menu =
-                                        new MainWindow();
-
-                                    menu->show();
-
-                                    close();
-                                }
+                                close();
                             }
                             else
                             {
-                                QMessageBox::information(
-                                    this,
-                                    "Victoria",
-                                    "¡Has completado el juego!"
-                                    );
-
                                 MainWindow *menu =
                                     new MainWindow();
 
@@ -293,9 +300,24 @@ void Juego::actualizarJuego()
 
                                 close();
                             }
-
-                            return;
                         }
+                        else
+                        {
+                            QMessageBox::information(
+                                this,
+                                "Victoria",
+                                "¡Has completado el juego!"
+                                );
+
+                            MainWindow *menu =
+                                new MainWindow();
+
+                            menu->show();
+
+                            close();
+                        }
+
+                        return;
                     }
 
                     scene->removeItem(

@@ -1,7 +1,9 @@
 #include "enemigo.h"
 
-Enemigo::Enemigo(Jugador *jugador)
+Enemigo::Enemigo(Jugador *jugador, unsigned int nivel)
 {
+    nivelActual = nivel;
+
     objetivo = jugador;
 
     velocidad= 2;

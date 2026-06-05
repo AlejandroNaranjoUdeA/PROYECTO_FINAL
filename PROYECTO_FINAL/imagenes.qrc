@@ -8,5 +8,8 @@
         <file>sprites/bolas_roca.png</file>
         <file>sprites/fondo2.png</file>
         <file>sprites/sprites2.png</file>
+        <file>sprites/bolas_aire.png</file>
+        <file>sprites/bolas_tierra.png</file>
+        <file>sprites/enemigo2.png</file>
     </qresource>
 </RCC>
