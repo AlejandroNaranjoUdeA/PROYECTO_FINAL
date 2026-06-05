@@ -1,4 +1,6 @@
 #include "juego.h"
+#include <QMessageBox>
+#include "mainwindow.h"
 
 Juego::Juego(unsigned int nivel,QWidget *parent)
     : QGraphicsView(parent)
@@ -62,7 +64,7 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
         enemigo->recibirDanio(-100);
     }
 
-    // BARRA DE VIDA:
+    // BARRA DE VIDA JUGADOR:
 
     barraVida = new QGraphicsRectItem();
 
@@ -76,6 +78,21 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
     barraVida->setBrush(Qt::white);
 
     scene->addItem(barraVida);
+
+    //BARRA DE VIDA ENEMIGO:
+
+    barraVidaEnemigo = new QGraphicsRectItem();
+
+    barraVidaEnemigo->setRect(
+        730,  // x
+        20,   // y
+        250,  // ancho
+        15    // alto
+        );
+
+    barraVidaEnemigo->setBrush(Qt::red);
+
+    scene->addItem(barraVidaEnemigo);
 
     scene->setFocusItem(jugador);
 
@@ -96,7 +113,10 @@ void Juego::actualizarJuego()
 {
     jugador->actualizar();
 
-    enemigo->actualizar();
+    if(enemigo != nullptr)
+    {
+        enemigo->actualizar();
+    }
 
     if(jugador->quiereDisparar())
     {
@@ -109,8 +129,6 @@ void Juego::actualizarJuego()
                 esAgua,
                 true
                 );
-
-
 
         if(jugador->miraDerecha())
         {
@@ -130,37 +148,41 @@ void Juego::actualizarJuego()
         double xSpawn = jugador->x() + 60;
         double ySpawn = jugador->y() + 40;
 
-        if(enemigo->quiereAtacar())
+        if(enemigo != nullptr)
         {
-            bool haciaDerecha =
-                jugador->x() > enemigo->x();
-
-            Ataque *roca =
-                new Ataque(
-                    haciaDerecha,
-                    false,
-                    false
-                    );
-
-            if(haciaDerecha)
+            if(enemigo->quiereAtacar())
             {
-                roca->setPos(
-                    enemigo->x() + 60,
-                    enemigo->y() + 80
-                    );
-            }
-            else
-            {
-                roca->setPos(
-                    enemigo->x() - 60,
-                    enemigo->y() + 80
-                    );
-            }
+                bool haciaDerecha =
+                    jugador->x() > enemigo->x();
 
-            scene->addItem(roca);
+                Ataque *roca =
+                    new Ataque(
+                        haciaDerecha,
+                        false,
+                        false
+                        );
 
-            ataques.append(roca);
+                if(haciaDerecha)
+                {
+                    roca->setPos(
+                        enemigo->x() + 60,
+                        enemigo->y() + 80
+                        );
+                }
+                else
+                {
+                    roca->setPos(
+                        enemigo->x() - 60,
+                        enemigo->y() + 80
+                        );
+                }
+
+                scene->addItem(roca);
+
+                ataques.append(roca);
+            }
         }
+
 
         bola->setPos(
             xSpawn,
@@ -180,31 +202,114 @@ void Juego::actualizarJuego()
 
         if(ataques[i]->perteneceAlJugador())
         {
-            if(ataques[i]->collidesWithItem(enemigo))
+            if(enemigo != nullptr)
             {
-                enemigo->recibirDanio(
-                    ataques[i]->getDanio()
-                    );
-
-                if(ataques[i]->vaDerecha())
+                if(ataques[i]->collidesWithItem(enemigo))
                 {
-                    enemigo->aplicarRetroceso(10);
+                    enemigo->recibirDanio(
+                        ataques[i]->getDanio()
+                        );
+
+                    if(ataques[i]->vaDerecha())
+                    {
+                        enemigo->aplicarRetroceso(10);
+                    }
+                    else
+                    {
+                        enemigo->aplicarRetroceso(-10);
+                    }
+
+                    //ELIMINAR ENEMIGO:
+                    if(enemigo->getVida() <= 0)
+                    {
+                        scene->removeItem(
+                            barraVidaEnemigo
+                            );
+
+                        delete barraVidaEnemigo;
+
+                        barraVidaEnemigo = nullptr;
+
+                        timer->stop();
+
+                        scene->removeItem(enemigo);
+
+                        delete enemigo;
+
+                        enemigo = nullptr;
+
+                        if(enemigo->getVida() <= 0)
+                        {
+                            timer->stop();
+
+                            scene->removeItem(enemigo);
+
+                            delete enemigo;
+
+                            enemigo = nullptr;
+
+                            QMessageBox::StandardButton opcion;
+
+                            if(nivelActual == 1)
+                            {
+                                opcion = QMessageBox::question(
+                                    this,
+                                    "Victoria",
+                                    "¡Ganaste!\n\n¿Ir al nivel 2?",
+                                    QMessageBox::Yes | QMessageBox::No
+                                    );
+
+                                if(opcion == QMessageBox::Yes)
+                                {
+                                    Juego *nivel2 =
+                                        new Juego(2);
+
+                                    nivel2->show();
+
+                                    close();
+                                }
+                                else
+                                {
+                                    MainWindow *menu =
+                                        new MainWindow();
+
+                                    menu->show();
+
+                                    close();
+                                }
+                            }
+                            else
+                            {
+                                QMessageBox::information(
+                                    this,
+                                    "Victoria",
+                                    "¡Has completado el juego!"
+                                    );
+
+                                MainWindow *menu =
+                                    new MainWindow();
+
+                                menu->show();
+
+                                close();
+                            }
+
+                            return;
+                        }
+                    }
+
+                    scene->removeItem(
+                        ataques[i]
+                        );
+
+                    delete ataques[i];
+
+                    ataques.removeAt(i);
+
+                    i--;
                 }
-                else
-                {
-                    enemigo->aplicarRetroceso(-10);
-                }
-
-                scene->removeItem(
-                    ataques[i]
-                    );
-
-                delete ataques[i];
-
-                ataques.removeAt(i);
-
-                i--;
             }
+
         }
         else
         {
@@ -235,5 +340,53 @@ void Juego::actualizarJuego()
         vida * 3,
         20
         );
+
+    if(jugador->getVida() <= 0)
+    {
+        timer->stop();
+
+        QMessageBox::StandardButton opcion;
+
+        opcion = QMessageBox::question(
+            this,
+            "Derrota",
+            "Has perdido.\n\n¿Deseas reintentar?",
+            QMessageBox::Yes | QMessageBox::No
+            );
+
+        if(opcion == QMessageBox::Yes)
+        {
+            Juego *nuevoJuego =
+                new Juego(nivelActual);
+
+            nuevoJuego->show();
+
+            close();
+        }
+        else
+        {
+            MainWindow *menu =
+                new MainWindow();
+
+            menu->show();
+
+            close();
+        }
+
+        return;
+    }
+
+    if(enemigo != nullptr)
+    {
+        int vidaEnemigo =
+            enemigo->getVida();
+
+        barraVidaEnemigo->setRect(
+            730,
+            20,
+            vidaEnemigo * 250/ 300,
+            20
+            );
+    }
 }
 

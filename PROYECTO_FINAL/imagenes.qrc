@@ -1,11 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>sprites/sprites1.png</file>
-        <file>sprites/sprite2.png</file>
         <file>sprites/fondo1.png</file>
         <file>sprites/enemigo.png</file>
         <file>sprites/bolas_fuego.png</file>
         <file>sprites/bolas_agua.png</file>
         <file>sprites/bolas_roca.png</file>
+        <file>sprites/fondo2.png</file>
+        <file>sprites/sprites2.png</file>
     </qresource>
 </RCC>

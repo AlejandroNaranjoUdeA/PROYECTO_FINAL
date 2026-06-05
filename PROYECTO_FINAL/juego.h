@@ -6,6 +6,7 @@
 #include <QGraphicsRectItem>
 #include <QTimer>
 
+
 #include "ataque.h"
 #include "jugador.h"
 #include "enemigo.h"
@@ -23,6 +24,7 @@ private:
     Enemigo *enemigo;
     QList<Ataque*> ataques;
     QGraphicsRectItem *barraVida;
+    QGraphicsRectItem *barraVidaEnemigo;
     QTimer *timer;
 
     unsigned int nivelActual;

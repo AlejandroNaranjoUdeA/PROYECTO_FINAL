@@ -14,7 +14,21 @@ Ataque::Ataque(bool derecha, bool esAgua, bool esDelJugador)
 
     frecuencia = 5;
 
-    danio = 100;
+    if(esDelJugador)
+    {
+        if(esAgua)
+        {
+            danio = 3;
+        }
+        else
+        {
+            danio = 5;
+        }
+    }
+    else
+    {
+        danio = 100;
+    }
 
     frameActual= 0;
 

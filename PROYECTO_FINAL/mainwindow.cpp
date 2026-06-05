@@ -41,7 +41,6 @@ MainWindow::~MainWindow()
 void MainWindow::iniciarNivel1()
 {
     juego = new Juego(1);
-
     juego->show();
 
     hide();

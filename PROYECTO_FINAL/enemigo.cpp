@@ -6,6 +6,8 @@ Enemigo::Enemigo(Jugador *jugador)
 
     velocidad= 2;
 
+    vida= 300;
+
     mirandoDerecha = true;
 
     velocidadRetroceso = 0;
