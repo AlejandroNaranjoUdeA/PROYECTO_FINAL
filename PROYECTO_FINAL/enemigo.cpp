@@ -8,6 +8,8 @@ Enemigo::Enemigo(Jugador *jugador)
 
     mirandoDerecha = true;
 
+    velocidadRetroceso = 0;
+
     spriteSheet = QPixmap(":/sprites/enemigo.png");
 
     // IDLE
@@ -26,6 +28,20 @@ Enemigo::Enemigo(Jugador *jugador)
 
 void Enemigo::actualizar()
 {
+    if(velocidadRetroceso != 0)
+    {
+        setX(
+            x() + velocidadRetroceso
+            );
+
+        velocidadRetroceso *= 0.85;
+
+        if(abs(velocidadRetroceso) < 0.2)
+        {
+            velocidadRetroceso = 0;
+        }
+    }
+
     if(!objetivo)
     {
         return;
@@ -140,4 +156,9 @@ void Enemigo::actualizar()
     }
 
     setPixmap(frame);
+}
+
+void Enemigo::aplicarRetroceso(double velocidad)
+{
+    velocidadRetroceso = velocidad;
 }

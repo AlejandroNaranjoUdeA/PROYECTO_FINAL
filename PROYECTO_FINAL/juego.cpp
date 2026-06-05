@@ -145,6 +145,32 @@ void Juego::actualizarJuego()
     for(int i = 0; i < ataques.size(); i++)
     {
         ataques[i]->actualizar();
+
+        if(ataques[i]->collidesWithItem(enemigo))
+        {
+            enemigo->recibirDanio(
+                ataques[i]->getDanio()
+                );
+
+            if(ataques[i]->vaDerecha())
+            {
+                enemigo->aplicarRetroceso(10);
+            }
+            else
+            {
+                enemigo->aplicarRetroceso(-10);
+            }
+
+            scene->removeItem(
+                ataques[i]
+                );
+
+            delete ataques[i];
+
+            ataques.removeAt(i);
+
+            i--;
+        }
     }
 
     int vida = jugador->getVida();

@@ -19,13 +19,16 @@ private:
 
     bool ataqueAgua;
 
+
     //fisica:
 
     double tiempo;
     double amplitud;
     double frecuencia;
-
     double yInicial;
+
+
+    bool derecha;
 
 public:
 
@@ -36,6 +39,8 @@ public:
     int getDanio();
 
     void setYInicial(double y);
+
+    bool vaDerecha();
 };
 
 #endif // ATAQUE_H

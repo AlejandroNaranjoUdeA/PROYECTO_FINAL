@@ -2,6 +2,8 @@
 
 Ataque::Ataque(bool derecha, bool esAgua)
 {
+    this->derecha = derecha;
+
     ataqueAgua = esAgua;
 
     tiempo = 0;
@@ -108,4 +110,9 @@ void Ataque::actualizar()
 void Ataque::setYInicial(double y)
 {
     yInicial = y;
+}
+
+bool Ataque::vaDerecha()
+{
+    return derecha;
 }

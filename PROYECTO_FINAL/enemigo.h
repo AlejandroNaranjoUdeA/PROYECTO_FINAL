@@ -18,11 +18,15 @@ private:
 
     bool mirandoDerecha;
 
+    double velocidadRetroceso;
+
 public:
 
     Enemigo(Jugador* jugador);
 
     void actualizar() override;
+
+    void aplicarRetroceso(double velocidad);
 };
 
 #endif // ENEMIGO_H
