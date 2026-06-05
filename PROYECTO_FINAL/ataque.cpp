@@ -1,8 +1,10 @@
 #include "ataque.h"
 
-Ataque::Ataque(bool derecha, bool esAgua)
+Ataque::Ataque(bool derecha, bool esAgua, bool esDelJugador)
 {
     this->derecha = derecha;
+
+    this->esDelJugador = esDelJugador;
 
     ataqueAgua = esAgua;
 
@@ -16,30 +18,47 @@ Ataque::Ataque(bool derecha, bool esAgua)
 
     frameActual= 0;
 
-    if(ataqueAgua)
+    if(esDelJugador)
     {
-        spriteSheet =
-            QPixmap(":/sprites/bolas_agua.png");
+        if(esAgua)
+        {
+            spriteSheet =
+                QPixmap(":/sprites/bolas_agua.png");
 
-        setPixmap(
-            spriteSheet.copy(
-                0,
-                0,
-                256,
-                181
-                )
-            );
+            setPixmap(
+                spriteSheet.copy(
+                    0,
+                    0,
+                    256,
+                    181
+                    )
+                );
+        }
+        else
+        {
+            spriteSheet =
+                QPixmap(":/sprites/bolas_fuego.png");
+
+            setPixmap(
+                spriteSheet.copy(
+                    0,
+                    0,
+                    175,
+                    181
+                    )
+                );
+        }
     }
     else
     {
         spriteSheet =
-            QPixmap(":/sprites/bolas_fuego.png");
+            QPixmap(":/sprites/bolas_roca.png");
 
         setPixmap(
             spriteSheet.copy(
                 0,
                 0,
-                175,
+                234,
                 181
                 )
             );
@@ -91,6 +110,7 @@ void Ataque::actualizar()
             yInicial +
             amplitud * sin(frecuencia * tiempo)
             );
+
     }
     else
     {
@@ -105,6 +125,7 @@ void Ataque::actualizar()
     }
 
     setX(x() + velocidadX);
+
 }
 
 void Ataque::setYInicial(double y)
@@ -115,4 +136,9 @@ void Ataque::setYInicial(double y)
 bool Ataque::vaDerecha()
 {
     return derecha;
+}
+
+bool Ataque::perteneceAlJugador()
+{
+    return esDelJugador;
 }

@@ -20,6 +20,16 @@ private:
 
     bool lanzarBola;
 
+    //FISICA PARABOLICO:
+
+    bool saltando;
+
+    double velocidadY;
+
+    double gravedad;
+
+    double sueloY;
+
 public:
 
     Jugador();

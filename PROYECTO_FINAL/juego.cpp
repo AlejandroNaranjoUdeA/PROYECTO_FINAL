@@ -77,12 +77,9 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
 
     scene->addItem(barraVida);
 
-
-
     scene->setFocusItem(jugador);
 
     jugador->setFocus();
-
 
 
     // TIMER
@@ -109,8 +106,11 @@ void Juego::actualizarJuego()
         Ataque *bola =
             new Ataque(
                 jugador->miraDerecha(),
-                esAgua
+                esAgua,
+                true
                 );
+
+
 
         if(jugador->miraDerecha())
         {
@@ -130,6 +130,38 @@ void Juego::actualizarJuego()
         double xSpawn = jugador->x() + 60;
         double ySpawn = jugador->y() + 40;
 
+        if(enemigo->quiereAtacar())
+        {
+            bool haciaDerecha =
+                jugador->x() > enemigo->x();
+
+            Ataque *roca =
+                new Ataque(
+                    haciaDerecha,
+                    false,
+                    false
+                    );
+
+            if(haciaDerecha)
+            {
+                roca->setPos(
+                    enemigo->x() + 60,
+                    enemigo->y() + 80
+                    );
+            }
+            else
+            {
+                roca->setPos(
+                    enemigo->x() - 60,
+                    enemigo->y() + 80
+                    );
+            }
+
+            scene->addItem(roca);
+
+            ataques.append(roca);
+        }
+
         bola->setPos(
             xSpawn,
             ySpawn
@@ -146,30 +178,52 @@ void Juego::actualizarJuego()
     {
         ataques[i]->actualizar();
 
-        if(ataques[i]->collidesWithItem(enemigo))
+        if(ataques[i]->perteneceAlJugador())
         {
-            enemigo->recibirDanio(
-                ataques[i]->getDanio()
-                );
-
-            if(ataques[i]->vaDerecha())
+            if(ataques[i]->collidesWithItem(enemigo))
             {
-                enemigo->aplicarRetroceso(10);
+                enemigo->recibirDanio(
+                    ataques[i]->getDanio()
+                    );
+
+                if(ataques[i]->vaDerecha())
+                {
+                    enemigo->aplicarRetroceso(10);
+                }
+                else
+                {
+                    enemigo->aplicarRetroceso(-10);
+                }
+
+                scene->removeItem(
+                    ataques[i]
+                    );
+
+                delete ataques[i];
+
+                ataques.removeAt(i);
+
+                i--;
             }
-            else
+        }
+        else
+        {
+            if(ataques[i]->collidesWithItem(jugador))
             {
-                enemigo->aplicarRetroceso(-10);
+                jugador->recibirDanio(
+                    ataques[i]->getDanio()
+                    );
+
+                scene->removeItem(
+                    ataques[i]
+                    );
+
+                delete ataques[i];
+
+                ataques.removeAt(i);
+
+                i--;
             }
-
-            scene->removeItem(
-                ataques[i]
-                );
-
-            delete ataques[i];
-
-            ataques.removeAt(i);
-
-            i--;
         }
     }
 

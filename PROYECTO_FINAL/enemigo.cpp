@@ -10,6 +10,10 @@ Enemigo::Enemigo(Jugador *jugador)
 
     velocidadRetroceso = 0;
 
+    lanzarRoca = false;
+
+    tiempoRecarga = 120;
+
     spriteSheet = QPixmap(":/sprites/enemigo.png");
 
     // IDLE
@@ -28,6 +32,15 @@ Enemigo::Enemigo(Jugador *jugador)
 
 void Enemigo::actualizar()
 {
+    tiempoRecarga--;
+
+    if(tiempoRecarga <= 0)
+    {
+        lanzarRoca = true;
+
+        tiempoRecarga = 120;
+    }
+
     if(velocidadRetroceso != 0)
     {
         setX(
@@ -161,4 +174,16 @@ void Enemigo::actualizar()
 void Enemigo::aplicarRetroceso(double velocidad)
 {
     velocidadRetroceso = velocidad;
+}
+
+bool Enemigo::quiereAtacar()
+{
+    if(lanzarRoca)
+    {
+        lanzarRoca = false;
+
+        return true;
+    }
+
+    return false;
 }

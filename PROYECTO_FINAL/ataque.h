@@ -30,9 +30,11 @@ private:
 
     bool derecha;
 
+    bool esDelJugador;
+
 public:
 
-    Ataque(bool derecha, bool esAgua);
+    Ataque(bool derecha, bool esAgua, bool esDelJugador);
 
     void actualizar();
 
@@ -41,6 +43,8 @@ public:
     void setYInicial(double y);
 
     bool vaDerecha();
+
+    bool perteneceAlJugador();
 };
 
 #endif // ATAQUE_H

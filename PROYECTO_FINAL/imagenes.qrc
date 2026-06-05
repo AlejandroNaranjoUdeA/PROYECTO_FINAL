@@ -6,5 +6,6 @@
         <file>sprites/enemigo.png</file>
         <file>sprites/bolas_fuego.png</file>
         <file>sprites/bolas_agua.png</file>
+        <file>sprites/bolas_roca.png</file>
     </qresource>
 </RCC>

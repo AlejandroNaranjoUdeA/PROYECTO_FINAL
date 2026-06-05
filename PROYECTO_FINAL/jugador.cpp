@@ -43,6 +43,16 @@ Jugador::Jugador()
     mirandoDerecha = true;
 
     lanzarBola = false;
+
+    //FISICA:
+
+    saltando = false;
+
+    velocidadY = 0;
+
+    gravedad = 0.6;
+
+    sueloY = 350;
 }
 
 void Jugador::keyPressEvent(QKeyEvent *event)
@@ -80,9 +90,12 @@ void Jugador::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_W)
     {
-        moverArriba();
+        if(!saltando)
+        {
+            saltando = true;
 
-        estado= CAMINANDO;
+            velocidadY = -12;
+        }
     }
 
     if(event->key() == Qt::Key_X)
@@ -110,6 +123,28 @@ void Jugador::keyPressEvent(QKeyEvent *event)
 
 void Jugador::actualizar()
 {
+    //FISICA DEL SALTO:
+
+    if(saltando)
+    {
+        setY(
+            y() + velocidadY
+            );
+
+        velocidadY += gravedad;
+
+        if(y() >= sueloY)
+        {
+            setY(sueloY);
+
+            saltando = false;
+
+            velocidadY = 0;
+        }
+    }
+
+    //ATAQUE
+
     int fila = personajeActual * 512;
 
     if(tiempoAtaque > 0)

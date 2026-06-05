@@ -20,6 +20,9 @@ private:
 
     double velocidadRetroceso;
 
+    bool lanzarRoca;
+    int tiempoRecarga;
+
 public:
 
     Enemigo(Jugador* jugador);
@@ -27,6 +30,8 @@ public:
     void actualizar() override;
 
     void aplicarRetroceso(double velocidad);
+
+    bool quiereAtacar();
 };
 
 #endif // ENEMIGO_H
