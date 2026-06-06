@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "juego.h"
 
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -33,6 +36,9 @@ private:
     Ui::MainWindow *ui;
 
     Juego *juego;
+
+    QMediaPlayer *musicaMenu;
+    QAudioOutput *audioMenu;
 };
 
 #endif // MAINWINDOW_H

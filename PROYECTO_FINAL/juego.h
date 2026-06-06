@@ -37,6 +37,12 @@ public:
 public slots:
 
     void actualizarJuego();
+
+protected:
+
+    void resizeEvent(
+        QResizeEvent *event
+        ) override;
 };
 
 #endif // JUEGO_H

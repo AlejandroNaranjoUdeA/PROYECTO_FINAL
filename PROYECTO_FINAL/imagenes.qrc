@@ -11,5 +11,12 @@
         <file>sprites/bolas_aire.png</file>
         <file>sprites/bolas_tierra.png</file>
         <file>sprites/enemigo2.png</file>
+        <file>sprites/nivel1.png</file>
+        <file>sprites/nivel2.png</file>
+        <file>sprites/fondo_menu.png</file>
+        <file>sprites/salir.png</file>
+        <file>sprites/menu.mp3</file>
+        <file>sprites/audio_nivel1.mp3</file>
+        <file>sprites/audio_nivel2.mp3</file>
     </qresource>
 </RCC>

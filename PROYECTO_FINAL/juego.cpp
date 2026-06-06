@@ -37,10 +37,25 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
 
     setScene(scene);
 
+    setRenderHint(
+        QPainter::Antialiasing
+        );
+
+    setRenderHint(
+        QPainter::SmoothPixmapTransform
+        );
+
+    setViewportUpdateMode(
+        QGraphicsView::FullViewportUpdate
+        );
+
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 
-    setFixedSize(1000,600);
+    resize(
+        1200,
+        720
+        );
 
     // JUGADOR
 
@@ -287,7 +302,7 @@ void Juego::actualizarJuego()
                                 Juego *nivel2 =
                                     new Juego(2);
 
-                                nivel2->show();
+                                nivel2->showMaximized();
 
                                 close();
                             }
@@ -296,7 +311,7 @@ void Juego::actualizarJuego()
                                 MainWindow *menu =
                                     new MainWindow();
 
-                                menu->show();
+                                menu->showMaximized();
 
                                 close();
                             }
@@ -312,7 +327,7 @@ void Juego::actualizarJuego()
                             MainWindow *menu =
                                 new MainWindow();
 
-                            menu->show();
+                            menu->showMaximized();
 
                             close();
                         }
@@ -381,7 +396,7 @@ void Juego::actualizarJuego()
             Juego *nuevoJuego =
                 new Juego(nivelActual);
 
-            nuevoJuego->show();
+            nuevoJuego->showMaximized();
 
             close();
         }
@@ -390,7 +405,7 @@ void Juego::actualizarJuego()
             MainWindow *menu =
                 new MainWindow();
 
-            menu->show();
+            menu->showMaximized();
 
             close();
         }
@@ -412,3 +427,14 @@ void Juego::actualizarJuego()
     }
 }
 
+void Juego::resizeEvent(
+    QResizeEvent *event
+    )
+{
+    QGraphicsView::resizeEvent(event);
+
+    fitInView(
+        scene->sceneRect(),
+        Qt::KeepAspectRatio
+        );
+}

@@ -3,6 +3,7 @@
 
 #include "personaje.h"
 #include "jugador.h"
+#include <cstdlib>
 
 #include <QPixmap>
 
@@ -24,6 +25,8 @@ private:
     int tiempoRecarga;
 
     unsigned int nivelActual;
+
+    int tiempoTeleport;
 
 public:
 

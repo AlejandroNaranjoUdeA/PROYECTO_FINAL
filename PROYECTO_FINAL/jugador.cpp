@@ -72,7 +72,12 @@ void Jugador::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_A)
     {
-        moverIzquierda();
+        //moverIzquierda();
+
+        if(x() > 100)
+        {
+            setX(x() - 10);
+        }
 
         estado = CAMINANDO;
 
@@ -81,7 +86,15 @@ void Jugador::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_D)
     {
-        moverDerecha();
+        //moverDerecha();
+
+        double ancho =
+            boundingRect().width() * scale();
+
+        if(x() + ancho < 900)
+        {
+            setX(x() + 10);
+        }
 
         estado = CAMINANDO;
 
@@ -129,6 +142,15 @@ void Jugador::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_P)
     {
         recibirDanio(10);
+    }
+    if(event->key() == Qt::Key_Space)
+    {
+        if(!saltando)
+        {
+            saltando = true;
+
+            velocidadY = -12;
+        }
     }
 }
 

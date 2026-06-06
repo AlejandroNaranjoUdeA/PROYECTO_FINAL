@@ -6,6 +6,8 @@ Enemigo::Enemigo(Jugador *jugador, unsigned int nivel)
 
     objetivo = jugador;
 
+    tiempoTeleport = 300;
+
     velocidad= 2;
 
     vida= 300;
@@ -18,18 +20,34 @@ Enemigo::Enemigo(Jugador *jugador, unsigned int nivel)
 
     tiempoRecarga = 120;
 
-    spriteSheet = QPixmap(":/sprites/enemigo.png");
+    if(nivelActual == 1)
+    {
+        spriteSheet =
+            QPixmap(":/sprites/enemigo.png");
 
-    // IDLE
+        setPixmap(
+            spriteSheet.copy(
+                0,
+                0,
+                384,
+                1024
+                )
+            );
+    }
+    else
+    {
+        spriteSheet =
+            QPixmap(":/sprites/enemigo2.png");
 
-    setPixmap(
-        spriteSheet.copy(
-            0,
-            0,
-            384,
-            1024
-            )
-        );
+        setPixmap(
+            spriteSheet.copy(
+                0,
+                0,
+                384,
+                1024
+                )
+            );
+    }
 
     setScale(0.2);
 }
@@ -37,6 +55,27 @@ Enemigo::Enemigo(Jugador *jugador, unsigned int nivel)
 void Enemigo::actualizar()
 {
     tiempoRecarga--;
+
+    if(nivelActual == 2)
+    {
+        tiempoTeleport--;
+
+        if(tiempoTeleport <= 0)
+        {
+            int posiciones[3] =
+                {
+                    150,
+                    500,
+                    850
+                };
+
+            setX(
+                posiciones[rand() % 3]
+                );
+
+            tiempoTeleport = 300;
+        }
+    }
 
     if(tiempoRecarga <= 0)
     {
@@ -47,9 +86,20 @@ void Enemigo::actualizar()
 
     if(velocidadRetroceso != 0)
     {
-        setX(
-            x() + velocidadRetroceso
-            );
+        double nuevaX =
+            x() + velocidadRetroceso;
+
+        if(nuevaX < 100)
+        {
+            nuevaX = 100;
+        }
+
+        if(nuevaX > 850)
+        {
+            nuevaX = 850;
+        }
+
+        setX(nuevaX);
 
         velocidadRetroceso *= 0.85;
 
@@ -89,8 +139,6 @@ void Enemigo::actualizar()
         }
     }
 
-    // ATACAR
-
     else
     {
         estado = ATACANDO;
@@ -101,6 +149,16 @@ void Enemigo::actualizar()
 
             contadorAtaque = 0;
         }
+    }
+
+    if(x() < 100)
+    {
+        setX(100);
+    }
+
+    if(x() > 850)
+    {
+        setX(850);
     }
 
 
@@ -114,7 +172,7 @@ void Enemigo::actualizar()
 
         frame=
             spriteSheet.copy(
-                1152,
+                774,
                 0,
                 384,
                 1024
@@ -127,7 +185,7 @@ void Enemigo::actualizar()
 
         frame=
             spriteSheet.copy(
-                384,
+                774,
                 0,
                 384,
                 1024
@@ -140,7 +198,7 @@ void Enemigo::actualizar()
 
         frame=
             spriteSheet.copy(
-                768,
+                384,
                 0,
                 384,
                 1024
@@ -154,7 +212,7 @@ void Enemigo::actualizar()
 
         frame=
             spriteSheet.copy(
-                0,
+                1152,
                 0,
                 384,
                 1024
