@@ -67,47 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnSalir->setStyleSheet(
         "border:none;"
         );
-    /*
-    ui->btnNivel1->setText("");
-    ui->btnNivel2->setText("");
-    ui->btnSalir->setText("");
-
-    ui->btnNivel1->setIcon(
-        QIcon(":/sprites/nivel1.png")
-        );
-
-    ui->btnNivel2->setIcon(
-        QIcon(":/sprites/nivel2.png")
-        );
-
-    ui->btnSalir->setIcon(
-        QIcon(":/sprites/salir.png")
-        );
-
-    ui->btnNivel1->setIconSize(
-        QSize(300,100)
-        );
-
-    ui->btnNivel2->setIconSize(
-        QSize(300,100)
-        );
-
-    ui->btnSalir->setIconSize(
-        QSize(300,100)
-        );
-
-    ui->btnNivel1->setStyleSheet(
-        "border:none;"
-        );
-
-    ui->btnNivel2->setStyleSheet(
-        "border:none;"
-        );
-
-    ui->btnSalir->setStyleSheet(
-        "border:none;"
-        );*/
-
 
     juego = nullptr;
 
