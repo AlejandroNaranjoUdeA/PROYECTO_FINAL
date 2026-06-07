@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QTimer>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 
 #include "ataque.h"
@@ -28,6 +30,9 @@ private:
     QTimer *timer;
 
     unsigned int nivelActual;
+
+    QMediaPlayer *musicaJuego;
+    QAudioOutput *audioJuego;
 
 public:
 

@@ -7,6 +7,16 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
 {
     nivelActual = nivel;
 
+    //MUSICA:
+
+    audioJuego = new QAudioOutput(this);
+
+    musicaJuego = new QMediaPlayer(this);
+
+    musicaJuego->setAudioOutput(audioJuego);
+
+    audioJuego->setVolume(0.6);
+
     // ESCENA
 
     scene = new QGraphicsScene();
@@ -16,11 +26,25 @@ Juego::Juego(unsigned int nivel,QWidget *parent)
     if(nivelActual == 1)
     {
         fondo.load(":/sprites/fondo1.png");
+
+        musicaJuego->setSource(
+            QUrl("qrc:/sprites/audio_nivel1.mp3")
+            );
     }
     else
     {
         fondo.load(":/sprites/fondo2.png");
+
+        musicaJuego->setSource(
+            QUrl("qrc:/sprites/audio_nivel2.mp3")
+            );
     }
+
+    musicaJuego->setLoops(
+        QMediaPlayer::Infinite
+        );
+
+    musicaJuego->play();
 
     scene->setBackgroundBrush(
         QBrush(
@@ -173,7 +197,9 @@ void Juego::actualizarJuego()
                 esAgua,
                 esAire,
                 esTierra,
-                true
+                true,
+                nivelActual
+
                 );
 
         if(jugador->miraDerecha())
@@ -207,7 +233,9 @@ void Juego::actualizarJuego()
                         false, // agua
                         false, // aire
                         false, // tierra
-                        false  // enemigo
+                        false,  // enemigo
+                        nivelActual
+
                         );
 
                 if(haciaDerecha)
@@ -279,6 +307,8 @@ void Juego::actualizarJuego()
                         barraVidaEnemigo = nullptr;
 
                         timer->stop();
+
+                        musicaJuego->stop();
 
                         scene->removeItem(enemigo);
 
@@ -381,6 +411,8 @@ void Juego::actualizarJuego()
     if(jugador->getVida() <= 0)
     {
         timer->stop();
+
+        musicaJuego->stop();
 
         QMessageBox::StandardButton opcion;
 

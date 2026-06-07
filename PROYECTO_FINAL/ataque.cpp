@@ -1,7 +1,10 @@
 #include "ataque.h"
 
-Ataque::Ataque(bool derecha, bool esAgua, bool esAire, bool esTierra, bool esDelJugador)
+Ataque::Ataque(bool derecha, bool esAgua, bool esAire, bool esTierra, bool esDelJugador, unsigned int nivel)
 {
+
+    nivelActual = nivel;
+
     this->derecha = derecha;
 
     this->esDelJugador = esDelJugador;
@@ -37,7 +40,14 @@ Ataque::Ataque(bool derecha, bool esAgua, bool esAire, bool esTierra, bool esDel
     }
     else
     {
-        danio = 100;
+        if(nivel == 1)
+        {
+            danio = 50;
+        }
+        else
+        {
+            danio = 100;
+        }
     }
 
     frameActual= 0;

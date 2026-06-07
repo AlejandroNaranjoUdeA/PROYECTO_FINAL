@@ -33,10 +33,12 @@ private:
     bool derecha;
     bool esDelJugador;
 
+    unsigned int nivelActual;
+
 public:
 
     Ataque(bool derecha, bool esAgua,bool esAire,
-           bool esTierra, bool esDelJugador);
+           bool esTierra, bool esDelJugador, unsigned int nivel);
 
     void actualizar();
 
